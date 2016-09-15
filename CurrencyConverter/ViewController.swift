@@ -79,8 +79,24 @@ class ViewController: UIViewController, UIPickerViewDataSource {
                 selectedRow = 0
             }
             
-            API.makeRequest(currencyKey[selectedRow!])
+            API.makeRequest(currencyKey[selectedRow!]) { val, error in
+                
+                print(val)
+                
+            }
             
+//            if let rate = API.makeRequest(currencyKey[selectedRow!]) {
+//                if let rateValue = Int(rate) {
+//                    let intValue = Int(value)
+//                    var result = API.convertCurrency(rateValue, money: intValue!)
+//                    print("Result: \(result)")
+//                } else {
+//                    print("Cann't convert rateValue")
+//                }
+//            } else {
+//                print("Cann't make request")
+//            }
+//            
         } else {
             print("Text field required")
         }
