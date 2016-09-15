@@ -22,6 +22,8 @@ class ViewController: UIViewController, UIPickerViewDataSource {
         
         self.view.backgroundColor = UIColor.whiteColor()
         setupViews()
+        
+        API.makeRequest()
     }
     
     func setupViews() {
