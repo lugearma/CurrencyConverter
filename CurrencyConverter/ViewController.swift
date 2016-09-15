@@ -9,6 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var inputCurrency: UITextField?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,9 +21,9 @@ class ViewController: UIViewController {
     
     func setupViews() {
         
-        let inputCurrency: UITextField = {
+        self.inputCurrency = {
             
-            let input = UITextField(frame: CGRect(x: 0.0, y: 100.0, width: 150.0, height: 60.0))
+            let input = UITextField()
             input.placeholder = "Currency I have"
             input.borderStyle = UITextBorderStyle.RoundedRect
             input.keyboardType = UIKeyboardType.NumberPad
@@ -31,12 +33,41 @@ class ViewController: UIViewController {
             
         }()
         
-        self.view.addSubview(inputCurrency)
+        let convertButton: UIButton = {
+            
+            let button = UIButton()
+            button.setTitle("Convert \u{1f4b8}", forState: .Normal)
+            button.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.addTarget(self, action: #selector(ViewController.convertMoney), forControlEvents: UIControlEvents.TouchUpInside)
+            
+            return button
+            
+        }()
         
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[v0]-30-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": inputCurrency]))
+        let currencyPicker: UIPickerView = {
+           
+            let picker = UIPickerView()
+            
+            
+            return picker
+        }()
         
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-100-[v0]", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": inputCurrency]))
+        self.view.addSubview(inputCurrency!)
+        self.view.addSubview(convertButton)
+        self.view.addSubview(currencyPicker)
         
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[v0]-30-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": inputCurrency!]))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[v0]-30-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": convertButton]))
+        
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-100-[v0]-16-[v1]", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": inputCurrency!, "v1": convertButton]))
     }
+    
+    func convertMoney() {
+        if let value = inputCurrency?.text {
+            print(value)
+        }
+    }
+    
 }
 
