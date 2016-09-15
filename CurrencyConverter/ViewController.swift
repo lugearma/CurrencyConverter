@@ -22,8 +22,6 @@ class ViewController: UIViewController, UIPickerViewDataSource {
         
         self.view.backgroundColor = UIColor.whiteColor()
         setupViews()
-        
-        API.makeRequest()
     }
     
     func setupViews() {
@@ -66,18 +64,19 @@ class ViewController: UIViewController, UIPickerViewDataSource {
         self.view.addSubview(convertButton)
         self.view.addSubview(currencyPicker!)
         
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[v0]-30-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": inputCurrency!]))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[v0]-30-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": convertButton]))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[v0]-30-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": currencyPicker!]))
+        self.view.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: inputCurrency!)
+        self.view.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: convertButton)
+        self.view.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: currencyPicker!)
         
         
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-100-[v0]-16-[v1][v2]", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": inputCurrency!, "v1": convertButton, "v2": currencyPicker!]))
+        self.view.addConstraintsWithFormat("V:|-100-[v0]-16-[v1][v2]", views: inputCurrency!, convertButton, currencyPicker!)
     }
     
     func convertCurrency() {
         if let value = inputCurrency?.text {
             print(value)
             if let row = selectedRow {
+//                API.makeRequest()
                 print(currencyKey[row])
             } else {
                 selectedRow = 0
@@ -106,7 +105,23 @@ extension ViewController: UIPickerViewDelegate {
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.selectedRow = row
-//        print(currencyOptions[row]!)
+    }
+}
+
+extension UIView {
+    
+    func addConstraintsWithFormat(format: String, views: UIView...) {
+        
+        var viewsDictionary = [String: UIView]()
+        
+        for (index, view) in views.enumerate() {
+            let key = "v\(index)"
+            viewsDictionary[key] = view
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
+        
     }
     
 }

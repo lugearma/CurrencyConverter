@@ -88,6 +88,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		923D8FD71D8B1D5500F7B651 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				92CB87421D8A7FC700C6C1EC /* API.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
 		928F8CE11D8A2AA10055F54E = {
 			isa = PBXGroup;
 			children = (
@@ -113,9 +121,9 @@
 		928F8CEC1D8A2AA20055F54E /* CurrencyConverter */ = {
 			isa = PBXGroup;
 			children = (
+				923D8FD71D8B1D5500F7B651 /* API */,
 				928F8CED1D8A2AA20055F54E /* AppDelegate.swift */,
 				928F8CEF1D8A2AA20055F54E /* ViewController.swift */,
-				92CB87421D8A7FC700C6C1EC /* API.swift */,
 				928F8CF41D8A2AA20055F54E /* Assets.xcassets */,
 				928F8CF61D8A2AA20055F54E /* LaunchScreen.storyboard */,
 				928F8CF91D8A2AA20055F54E /* Info.plist */,

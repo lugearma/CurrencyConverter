@@ -11,11 +11,10 @@ import Foundation
 
 class API: NSObject {
     
-    class func makeRequest(){
-        Alamofire.request(.GET, "http://api.fixer.io/latest?base=USD&symbols=MXN").response { response in
-            
-            print(response.1)  // original URL request
-            
+    class func makeRequest(currency: String){
+        Alamofire.request(.GET, "http://api.fixer.io/latest",parameters: ["base": "USD", "symbols":"MXN"]).responseJSON {
+            response in
+            print(response.result.value!)
         }
     }
 
