@@ -12,7 +12,7 @@ import Foundation
 class API: NSObject {
     
     class func makeRequest(currency: String){
-        Alamofire.request(.GET, "http://api.fixer.io/latest",parameters: ["base": "USD", "symbols":"MXN"]).responseJSON {
+        Alamofire.request(.GET, "http://api.fixer.io/latest",parameters: ["base": "USD", "symbols":currency]).responseJSON {
             response in
             print(response.result.value!)
         }

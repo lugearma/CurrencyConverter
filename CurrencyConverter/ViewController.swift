@@ -69,18 +69,17 @@ class ViewController: UIViewController, UIPickerViewDataSource {
         self.view.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: currencyPicker!)
         
         
-        self.view.addConstraintsWithFormat("V:|-100-[v0]-16-[v1][v2]", views: inputCurrency!, convertButton, currencyPicker!)
+        self.view.addConstraintsWithFormat("V:|-100-[v0][v1][v2]", views: inputCurrency!, currencyPicker!, convertButton)
     }
     
     func convertCurrency() {
         if let value = inputCurrency?.text {
             print(value)
-            if let row = selectedRow {
-//                API.makeRequest()
-                print(currencyKey[row])
-            } else {
+            if selectedRow == nil {
                 selectedRow = 0
             }
+            
+            API.makeRequest(currencyKey[selectedRow!])
             
         } else {
             print("Text field required")
