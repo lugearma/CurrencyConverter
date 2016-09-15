@@ -8,10 +8,14 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPickerViewDataSource {
     
     var inputCurrency: UITextField?
-    let currencyOptions = ["GBP": "Pound sterling", "EUR": "Euro", "JPY": "Japanese Yen", "BRL": "Brazilian Real"]
+    var currencyPicker: UIPickerView?
+    let currencyOptions = [0: "Pound sterling", 1: "Euro", 2: "Japanese Yen", 3: "Brazilian Real"]
+    let currencyKey = ["GBP", "EUR", "JPY", "BRL"]
+    var selectedRow: Int?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +50,7 @@ class ViewController: UIViewController {
             
         }()
         
-        let currencyPicker: UIPickerView = {
+        currencyPicker = {
            
             let picker = UIPickerView()
             picker.delegate = self
@@ -58,39 +62,50 @@ class ViewController: UIViewController {
         
         self.view.addSubview(inputCurrency!)
         self.view.addSubview(convertButton)
-        self.view.addSubview(currencyPicker)
+        self.view.addSubview(currencyPicker!)
         
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[v0]-30-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": inputCurrency!]))
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[v0]-30-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": convertButton]))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[v0]-30-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": currencyPicker]))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[v0]-30-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": currencyPicker!]))
         
         
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-100-[v0]-16-[v1][v2]", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": inputCurrency!, "v1": convertButton, "v2": currencyPicker]))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-100-[v0]-16-[v1][v2]", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": inputCurrency!, "v1": convertButton, "v2": currencyPicker!]))
     }
     
     func convertCurrency() {
         if let value = inputCurrency?.text {
             print(value)
+            if let row = selectedRow {
+                print(currencyKey[row])
+            } else {
+                selectedRow = 0
+            }
+            
+        } else {
+            print("Text field required")
         }
     }
 }
 
 extension ViewController: UIPickerViewDelegate {
     
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return currencyOptions.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return "Hola"
+        return currencyOptions[row]
     }
     
-}
-
-extension ViewController: UIPickerViewDataSource {
-    
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.selectedRow = row
+//        print(currencyOptions[row]!)
     }
+    
 }
 
