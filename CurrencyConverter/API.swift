@@ -12,13 +12,11 @@ import Foundation
 class API: NSObject {
     
     class func makeRequest(){
-        Alamofire.request(.GET, "https://httpbin.org/get").response { response in
+        Alamofire.request(.GET, "http://api.fixer.io/latest?base=USD&symbols=MXN").response { response in
             
-            print(response.0)  // original URL request
+            print(response.1)  // original URL request
             
         }
     }
-    
-    
-    
+
 }
