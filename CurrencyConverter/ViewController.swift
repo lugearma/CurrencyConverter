@@ -101,8 +101,8 @@ class ViewController: UIViewController, UIPickerViewDataSource {
             }
             
             API.getCurrencyValue((selectedRow?.getStringValue())!) { value, error in
-                if value != nil {
-                    print(value)
+                if let val = value {
+                    self.parseData(val)
                 } else {
                     print(error)
                 }
@@ -110,6 +110,15 @@ class ViewController: UIViewController, UIPickerViewDataSource {
         } else {
             print("Text field required")
         }
+    }
+    
+    func parseData(response: NSDictionary) -> Double? {
+        var currencyValue: Double?
+        let json = JSON(response)
+        
+        currencyValue = json["rates"][(selectedRow?.getStringValue())!].doubleValue
+        
+        return currencyValue
     }
 }
 
@@ -135,8 +144,6 @@ extension ViewController: UIPickerViewDelegate {
     func assignSelected(row: Int) {
         
         switch row {
-//        case 0:
-//            self.selectedRow = .GBP
         case 1:
             self.selectedRow = .EUR
         case 2:
