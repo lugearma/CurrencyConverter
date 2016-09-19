@@ -34,7 +34,7 @@ class ViewController: UIViewController, UIPickerViewDataSource {
     let currencyOptions = [0: "Pound sterling", 1: "Euro", 2: "Japanese Yen", 3: "Brazilian Real"]
     let currencyKey = ["GBP", "EUR", "JPY", "BRL"]
     var selectedRow: Currency?
-    
+    var currencyValue: Double?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,8 +94,9 @@ class ViewController: UIViewController, UIPickerViewDataSource {
     }
     
     func convertCurrency() {
+        
         if let value = inputCurrency?.text {
-            print(value)
+            let castedInputValue = Double(value)
             if self.selectedRow == nil {
                 self.selectedRow = .GBP
             }
@@ -103,6 +104,11 @@ class ViewController: UIViewController, UIPickerViewDataSource {
             API.getCurrencyValue((selectedRow?.getStringValue())!) { value, error in
                 if let val = value {
                     self.parseData(val)
+                    if let currency = self.currencyValue {
+                        if let inValConverted = castedInputValue {
+                            print(self.calculateConvertion(inValConverted, newCurrencyValue: currency))
+                        }
+                    }
                 } else {
                     print(error)
                 }
@@ -113,12 +119,15 @@ class ViewController: UIViewController, UIPickerViewDataSource {
     }
     
     func parseData(response: NSDictionary) -> Double? {
-        var currencyValue: Double?
         let json = JSON(response)
         
-        currencyValue = json["rates"][(selectedRow?.getStringValue())!].doubleValue
+        self.currencyValue = json["rates"][(selectedRow?.getStringValue())!].doubleValue
         
-        return currencyValue
+        return self.currencyValue
+    }
+    
+    func calculateConvertion(inputValue: Double, newCurrencyValue: Double) -> Double {
+        return inputValue * newCurrencyValue
     }
 }
 
