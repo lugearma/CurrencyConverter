@@ -12,33 +12,16 @@ import SwiftyJSON
 
 class API: NSObject {
     
-    class func makeRequest(currency: String, completionHandler: (NSDictionary?, NSError?) -> Void) -> String? {
+    class func getCurrencyValue(currency: String, completionHandler: (NSDictionary?, NSError?) -> Void) {
         
-//        var rate: String?
-        
-        Alamofire.request(.GET, "http://api.fixer.io/latest",parameters: ["base": "USD", "symbols":currency]).responseJSON { response in
+        Alamofire.request(.GET, "http://api.fixer.io/latest",parameters: ["base": "USD", "symbols":currency]).validate().responseJSON { response in
             
             switch response.result {
             case .Success(let value):
-                
                 completionHandler(value as? NSDictionary, nil)
-                
             case .Failure(let error):
-                
                 completionHandler(nil, error)
-                
             }
-            
-//            print(response.result.value!)
-//            let json = JSON(response.result.value!)
-//            let rates = json["rates"]
-//            rate = rates["GBP"].stringValue
         }
-        
-        return rate
-    }
-    
-    class func convertCurrency(rate: Int, money: Int) -> Int {
-        
     }
 }

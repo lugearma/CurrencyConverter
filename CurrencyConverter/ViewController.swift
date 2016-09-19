@@ -7,6 +7,25 @@
 //
 
 import UIKit
+import SwiftyJSON
+
+enum Currency {
+    
+    case GBP, EUR, JPY, BRL
+    
+    func getStringValue() -> String {
+        switch self {
+        case .GBP:
+            return "GBP"
+        case .EUR:
+            return "EUR"
+        case .JPY:
+            return "JPY"
+        case .BRL:
+            return "BRL"
+        }
+    }
+}
 
 class ViewController: UIViewController, UIPickerViewDataSource {
     
@@ -14,7 +33,7 @@ class ViewController: UIViewController, UIPickerViewDataSource {
     var currencyPicker: UIPickerView?
     let currencyOptions = [0: "Pound sterling", 1: "Euro", 2: "Japanese Yen", 3: "Brazilian Real"]
     let currencyKey = ["GBP", "EUR", "JPY", "BRL"]
-    var selectedRow: Int?
+    var selectedRow: Currency?
     
 
     override func viewDidLoad() {
@@ -60,43 +79,34 @@ class ViewController: UIViewController, UIPickerViewDataSource {
             return picker
         }()
         
+        //Add child views
         self.view.addSubview(inputCurrency!)
         self.view.addSubview(convertButton)
         self.view.addSubview(currencyPicker!)
         
+        //Horizontal constraints
         self.view.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: inputCurrency!)
         self.view.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: convertButton)
         self.view.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: currencyPicker!)
         
-        
+        //Vertical constraints
         self.view.addConstraintsWithFormat("V:|-100-[v0][v1][v2]", views: inputCurrency!, currencyPicker!, convertButton)
     }
     
     func convertCurrency() {
         if let value = inputCurrency?.text {
             print(value)
-            if selectedRow == nil {
-                selectedRow = 0
+            if self.selectedRow == nil {
+                self.selectedRow = .GBP
             }
             
-            API.makeRequest(currencyKey[selectedRow!]) { val, error in
-                
-                print(val)
-                
+            API.getCurrencyValue((selectedRow?.getStringValue())!) { value, error in
+                if value != nil {
+                    print(value)
+                } else {
+                    print(error)
+                }
             }
-            
-//            if let rate = API.makeRequest(currencyKey[selectedRow!]) {
-//                if let rateValue = Int(rate) {
-//                    let intValue = Int(value)
-//                    var result = API.convertCurrency(rateValue, money: intValue!)
-//                    print("Result: \(result)")
-//                } else {
-//                    print("Cann't convert rateValue")
-//                }
-//            } else {
-//                print("Cann't make request")
-//            }
-//            
         } else {
             print("Text field required")
         }
@@ -119,7 +129,24 @@ extension ViewController: UIPickerViewDelegate {
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.selectedRow = row
+        self.assignSelected(row)
+    }
+    
+    func assignSelected(row: Int) {
+        
+        switch row {
+//        case 0:
+//            self.selectedRow = .GBP
+        case 1:
+            self.selectedRow = .EUR
+        case 2:
+            self.selectedRow = .JPY
+        case 3:
+            self.selectedRow = .BRL
+        default:
+            self.selectedRow = .GBP
+            
+        }
     }
 }
 
