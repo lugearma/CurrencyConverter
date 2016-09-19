@@ -29,10 +29,9 @@ enum Currency {
 
 class ViewController: UIViewController, UIPickerViewDataSource {
     
+    let currencyOptions = ["Pound sterling", "Euro", "Japanese Yen", "Brazilian Real"]
     var inputCurrency: UITextField?
     var currencyPicker: UIPickerView?
-    let currencyOptions = [0: "Pound sterling", 1: "Euro", 2: "Japanese Yen", 3: "Brazilian Real"]
-    let currencyKey = ["GBP", "EUR", "JPY", "BRL"]
     var selectedRow: Currency?
     var currencyValue: Double?
 
@@ -40,6 +39,7 @@ class ViewController: UIViewController, UIPickerViewDataSource {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.whiteColor()
+        navigationItem.title = "Currency converter"
         setupViews()
     }
     
@@ -107,6 +107,7 @@ class ViewController: UIViewController, UIPickerViewDataSource {
                     if let currency = self.currencyValue {
                         if let inValConverted = castedInputValue {
                             print(self.calculateConvertion(inValConverted, newCurrencyValue: currency))
+                            self.pushCharView(self.calculateConvertion(inValConverted, newCurrencyValue: currency))
                         }
                     }
                 } else {
@@ -116,6 +117,16 @@ class ViewController: UIViewController, UIPickerViewDataSource {
         } else {
             print("Text field required")
         }
+    }
+    
+    func pushCharView(value: Double) {
+        let charViewController = ChartViewController()
+        let strValue = String(value)
+        charViewController.convertedCurrencyString = strValue
+        
+        let navigationViewController = UINavigationController(rootViewController: charViewController)
+        
+        self.presentViewController(navigationViewController, animated: true, completion: nil)
     }
     
     func parseData(response: NSDictionary) -> Double? {
