@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		54179B376134601FA45D358C /* Pods_CurrencyConverter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F22EF903DBBDAE75FD4B06B5 /* Pods_CurrencyConverter.framework */; };
+		920F8AF41D90B41A00F260B2 /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920F8AF31D90B41900F260B2 /* Routes.swift */; };
 		923D8FFA1D902B1100F7B651 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923D8FF91D902B1100F7B651 /* ViewController.swift */; };
 		923D8FFC1D902E1200F7B651 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923D8FFB1D902E1200F7B651 /* ChartViewController.swift */; };
 		923D8FFE1D902E3400F7B651 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 923D8FFD1D902E3400F7B651 /* Charts.framework */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		920F8AF31D90B41900F260B2 /* Routes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
 		923D8FF91D902B1100F7B651 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		923D8FFB1D902E1200F7B651 /* ChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		923D8FFD1D902E3400F7B651 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/CurrencyConverter-driuupnefrquszbpxjlryzjzitmg/Build/Products/Debug-iphonesimulator/Charts/Charts.framework"; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				92CB87421D8A7FC700C6C1EC /* API.swift */,
+				920F8AF31D90B41900F260B2 /* Routes.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 			files = (
 				923D8FFA1D902B1100F7B651 /* ViewController.swift in Sources */,
 				923D8FFC1D902E1200F7B651 /* ChartViewController.swift in Sources */,
+				920F8AF41D90B41A00F260B2 /* Routes.swift in Sources */,
 				92CB87431D8A7FC700C6C1EC /* API.swift in Sources */,
 				928F8CEE1D8A2AA20055F54E /* AppDelegate.swift in Sources */,
 			);

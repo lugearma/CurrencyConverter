@@ -48,7 +48,7 @@ class ViewController: UIViewController, UIPickerViewDataSource {
         self.inputCurrency = {
             
             let input = UITextField()
-            input.placeholder = "Currency I have"
+            input.placeholder = "Currency I have (USD)"
             input.borderStyle = UITextBorderStyle.RoundedRect
             input.keyboardType = UIKeyboardType.NumberPad
             input.translatesAutoresizingMaskIntoConstraints = false
@@ -104,6 +104,7 @@ class ViewController: UIViewController, UIPickerViewDataSource {
             API.getCurrencyValue((selectedRow?.getStringValue())!) { value, error in
                 if let val = value {
                     self.parseData(val)
+                    print(val)
                     if let currency = self.currencyValue {
                         if let inValConverted = castedInputValue {
                             print(self.calculateConvertion(inValConverted, newCurrencyValue: currency))

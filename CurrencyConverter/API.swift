@@ -14,14 +14,28 @@ class API: NSObject {
     
     class func getCurrencyValue(currency: String, completionHandler: (NSDictionary?, NSError?) -> Void) {
         
-        Alamofire.request(.GET, "http://api.fixer.io/latest",parameters: ["base": "USD", "symbols":currency]).validate().responseJSON { response in
+        Alamofire.request(.GET, Routes.Latest.url(Routes.Latest), parameters: ["base": "USD", "symbols":currency]).validate().responseJSON { response in
             
             switch response.result {
-                case .Success(let value):
-                    completionHandler(value as? NSDictionary, nil)
-                case .Failure(let error):
-                    completionHandler(nil, error)
+            case .Success(let value):
+                completionHandler(value as? NSDictionary, nil)
+            case .Failure(let error):
+                completionHandler(nil, error)
             }
         }
+    }
+    
+    class func getAllCurrency(completionHandle: (NSDictionary?, NSError?) -> Void) {
+        
+        Alamofire.request(.GET, Routes.Latest.url(Routes.Latest), parameters: ["base": "USD"]).validate().responseJSON { response in
+            
+            switch response.result {
+            case .Success(let value):
+                completionHandle(value as? NSDictionary, nil)
+            case .Failure(let error):
+                completionHandle(nil, error)
+            }
+        }
+        
     }
 }
