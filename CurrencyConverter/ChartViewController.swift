@@ -13,7 +13,8 @@ class ChartViewController: UIViewController, ChartViewDelegate {
     
     let currencies = ["GBP" , "EUR", "JPY", "BRL"]
     var currencyValue = [Double]()
-    var barCharView = BarChartView(frame: CGRect(x: 30, y: 220, width: 300, height: 300))
+    var barCharView = BarChartView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
+    var containerCharView = UIView()
     
     var convertedCurrencyLabel = UILabel()
     var convertedCurrencyString = String() {
@@ -31,6 +32,10 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(ChartViewController.hideModal))
         navigationItem.title = "Chart"
         getData()
+        
+        //TODO: Put this code in other side
+        containerCharView.addSubview(self.barCharView)
+        containerCharView.backgroundColor = UIColor.redColor()
     }
     
     func setupChar() {
@@ -40,7 +45,7 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         self.barCharView.gridBackgroundColor = UIColor.darkGrayColor()
         self.barCharView.tintColor = UIColor.darkGrayColor()
         self.barCharView.noDataText = "No data provided"
-        self.barCharView.translatesAutoresizingMaskIntoConstraints = false
+//        self.barCharView.translatesAutoresizingMaskIntoConstraints = false
         
         self.setChartData(currencies)
     }
@@ -126,19 +131,19 @@ class ChartViewController: UIViewController, ChartViewDelegate {
         
         self.view.addSubview(messageLabel)
         self.view.addSubview(convertedCurrencyLabel)
-        self.view.addSubview(barCharView)
+        self.view.addSubview(containerCharView)
         self.view.addSubview(messageCharLabel)
         
 
         
         //Horizontal constraints
-        self.view.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: messageLabel)
-        self.view.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: convertedCurrencyLabel)
-        self.view.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: messageCharLabel)
-        
+        self.view.addConstraintsWithFormat("H:|-16-[v0]-16-|", views: messageLabel)
+        self.view.addConstraintsWithFormat("H:|-16-[v0]-16-|", views: convertedCurrencyLabel)
+        self.view.addConstraintsWithFormat("H:|-16-[v0]-16-|", views: containerCharView)
+        self.view.addConstraintsWithFormat("H:|-16-[v0]-16-|", views: messageCharLabel)
         
         //Vertical constraints
-        self.view.addConstraintsWithFormat("V:|-100-[v0]-16-[v1]-16-[v2]", views: messageLabel,convertedCurrencyLabel, messageCharLabel)
+        self.view.addConstraintsWithFormat("V:|-100-[v0]-16-[v1]-16-[v2]-24-[v3]", views: messageLabel, convertedCurrencyLabel, messageCharLabel, containerCharView)
         
     }
     
