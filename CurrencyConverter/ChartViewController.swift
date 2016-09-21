@@ -13,7 +13,7 @@ class ChartViewController: UIViewController, ChartViewDelegate {
     
     let currencies = ["GBP" , "EUR", "JPY", "BRL"]
     var currencyValue = [Double]()
-    var barCharView = BarChartView(frame: CGRect(x: 30, y: 120, width: 300, height: 300))
+    var barCharView = BarChartView(frame: CGRect(x: 30, y: 220, width: 300, height: 300))
     
     var convertedCurrencyLabel = UILabel()
     var convertedCurrencyString = String() {
@@ -52,11 +52,11 @@ class ChartViewController: UIViewController, ChartViewDelegate {
             yVals1.append(BarChartDataEntry(value: currencyValue[index], xIndex: index))
         }
         
-        let set1 = BarChartDataSet(yVals: yVals1, label: "Hola")
+        let set1 = BarChartDataSet(yVals: yVals1, label: "Currency")
         
         set1.axisDependency = .Left
-        set1.setColor(UIColor.redColor())
-        set1.barBorderColor = UIColor.redColor()
+        set1.setColor(UIColor.darkGrayColor())
+        set1.barBorderColor = UIColor.blackColor()
         set1.highlightColor = UIColor.orangeColor()
 
         var dataSets = [BarChartDataSet]()
@@ -97,6 +97,7 @@ class ChartViewController: UIViewController, ChartViewDelegate {
             
             label.textColor = UIColor.blackColor()
             label.textAlignment = NSTextAlignment.Center
+            label.font = UIFont.boldSystemFontOfSize(24)
             label.text = convertedCurrencyString
             
             return label
@@ -112,19 +113,32 @@ class ChartViewController: UIViewController, ChartViewDelegate {
             return label
         }()
         
+        let messageCharLabel: UILabel = {
+            let label = UILabel()
+            
+            label.textColor = UIColor.blackColor()
+            label.textAlignment = NSTextAlignment.Center
+            label.lineBreakMode = NSLineBreakMode.ByCharWrapping
+            label.text = "Value of some currencies respect dollar"
+            
+            return label
+        }()
+        
         self.view.addSubview(messageLabel)
         self.view.addSubview(convertedCurrencyLabel)
         self.view.addSubview(barCharView)
+        self.view.addSubview(messageCharLabel)
+        
 
         
         //Horizontal constraints
         self.view.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: messageLabel)
         self.view.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: convertedCurrencyLabel)
-//        self.view.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: barCharView)
+        self.view.addConstraintsWithFormat("H:|-30-[v0]-30-|", views: messageCharLabel)
         
         
         //Vertical constraints
-        self.view.addConstraintsWithFormat("V:|-100-[v0]-16-[v1]", views: messageLabel,convertedCurrencyLabel)
+        self.view.addConstraintsWithFormat("V:|-100-[v0]-16-[v1]-16-[v2]", views: messageLabel,convertedCurrencyLabel, messageCharLabel)
         
     }
     
